@@ -7,10 +7,13 @@
 #define CLOCK_TYPE "times()"
 #include <sys/types.h>
 #include <sys/times.h>
-#ifndef HZ	/* Added by SP 900619 */
-#include <sys/param.h> /* If your system doesn't have this, use -DHZ=xxx */
+#include <stdio.h>
+#ifndef HZ	/* Added for Android compatibility */
+#ifdef __ANDROID__
+#define HZ 100  /* Default value for Android, adjust if needed */
 #else
-	*** You must define HZ!!! ***
+#include <sys/param.h> /* If your system doesn't have this, use -DHZ=xxx */
+#endif
 #endif /* HZ */
 #ifndef PASS2
 struct tms      time_info;
